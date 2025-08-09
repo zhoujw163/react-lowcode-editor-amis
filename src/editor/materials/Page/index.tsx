@@ -1,7 +1,18 @@
-import { type PropsWithChildren } from 'react';
+import useMaterialDrop from '@/editor/hooks/useMaterialDrop';
+import type { CommonComponentProps } from '@/editor/types';
 
-function Page({ children }: PropsWithChildren) {
-  return <div className="p-[20px] h-full box-border">{children}</div>;
+function Page({ children, id }: CommonComponentProps) {
+  const { canDrop, dropRef } = useMaterialDrop(['Container', 'Button'], id);
+
+  return (
+    <div
+      ref={dropRef}
+      className="p-[20px] h-full box-border"
+      style={{ border: canDrop ? '2px solid #1677ff' : 'none' }}
+    >
+      {children}
+    </div>
+  );
 }
 
 export default Page;

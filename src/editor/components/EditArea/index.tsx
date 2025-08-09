@@ -1,34 +1,34 @@
-import { createElement, useEffect, type ReactNode } from 'react';
-import { useComponentsStore, type Component } from '../stores/components';
-import { useComponentConfigStore } from '../stores/component-config';
+import { createElement, type ReactNode } from 'react';
+import { useComponentsStore, type Component } from '../../stores/components';
+import { useComponentConfigStore } from '../../stores/component-config';
 
 export default function EditArea() {
-  const { components, addComponent } = useComponentsStore();
+  const { components } = useComponentsStore();
   const { componentConfig } = useComponentConfigStore();
 
-  useEffect(() => {
-    addComponent(
-      {
-        id: 222,
-        name: 'Container',
-        props: {},
-        children: []
-      },
-      1
-    );
+  // useEffect(() => {
+  //   addComponent(
+  //     {
+  //       id: 222,
+  //       name: 'Container',
+  //       props: {},
+  //       children: []
+  //     },
+  //     1
+  //   );
 
-    addComponent(
-      {
-        id: 333,
-        name: 'Button',
-        props: {
-          text: '无敌'
-        },
-        children: []
-      },
-      222
-    );
-  }, []);
+  //   addComponent(
+  //     {
+  //       id: 333,
+  //       name: 'Button',
+  //       props: {
+  //         text: '无敌'
+  //       },
+  //       children: []
+  //     },
+  //     222
+  //   );
+  // }, []);
 
   function renderComponents(components: Component[]): ReactNode {
     return components.map(component => {
@@ -42,6 +42,8 @@ export default function EditArea() {
         config.component,
         {
           key: component.id,
+          id: component.id,
+          name: component.name,
           ...config.defaultProps,
           ...component.props
         },
