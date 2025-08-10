@@ -54,12 +54,12 @@ export default function EditArea() {
     return components.map(component => {
       const config = componentConfig?.[component.name];
 
-      if (!config?.component) {
+      if (!config?.devComponent) {
         return null;
       }
 
       return createElement(
-        config.component,
+        config.devComponent,
         {
           key: component.id,
           id: component.id,

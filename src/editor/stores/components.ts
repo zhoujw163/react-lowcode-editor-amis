@@ -13,6 +13,7 @@ export interface Component {
 
 interface State {
   components: Component[];
+  mode: 'edit' | 'preview'; // 区分编辑模式和预览模式
   curComponentId: number | null; // 当前选中组件ID
   curComponent: Component | null; // 当前选中组件
 }
@@ -23,6 +24,7 @@ interface Action {
   updateComponentProps: (componentId: number, props: Record<string, any>) => void;
   updateComponentStyles: (componentId: number, styles: CSSProperties, replace?: boolean) => void;
   setCurComponentId: (componentId: number | null) => void;
+  setMode: (mode: 'edit' | 'preview') => void;
 }
 
 export const useComponentsStore = create<State & Action>((set, get) => ({
@@ -36,6 +38,8 @@ export const useComponentsStore = create<State & Action>((set, get) => ({
   ],
   curComponentId: null, // 当前选中组件ID
   curComponent: null, // 当前选中组件
+  mode: 'edit', // 区分编辑模式和预览模式
+  setMode: (mode: 'edit' | 'preview') => set({ mode }),
 
   /**
    * 添加组件

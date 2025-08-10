@@ -1,1 +1,9 @@
 @import 'tailwindcss';
+
+/* monaco editor 代码提示弹窗位置调整
+ * 内部样式是通过动态计算的行内样式
+ * 所以需要通过 !important 来覆盖
+ */
+.editor-widget.suggest-widget {
+  left: 0 !important;
+}
