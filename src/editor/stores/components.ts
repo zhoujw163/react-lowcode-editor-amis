@@ -1,9 +1,11 @@
+import type { CSSProperties } from 'react';
 import { create } from 'zustand';
 
 export interface Component {
   id: number;
   name: string;
   props: Record<string, any>;
+  styles?: CSSProperties;
   desc: string;
   children?: Component[];
   parentId?: number;
@@ -19,6 +21,7 @@ interface Action {
   addComponent: (component: Component, parentId?: number) => void;
   deleteComponent: (componentId: number) => void;
   updateComponentProps: (componentId: number, props: Record<string, any>) => void;
+  updateComponentStyles: (componentId: number, styles: CSSProperties, replace?: boolean) => void;
   setCurComponentId: (componentId: number | null) => void;
 }
 
@@ -95,6 +98,23 @@ export const useComponentsStore = create<State & Action>((set, get) => ({
       return { components: [...state.components] };
     });
   },
+  /**
+   * 更新组件样式
+   * @param componentId 组件ID
+   * @param styles 样式
+   */
+  updateComponentStyles(componentId, styles, replace = false) {
+    set(state => {
+      const component = getComponentById(componentId, state.components);
+      if (component) {
+        component.styles = replace ? { ...styles } : { ...component.styles, ...styles };
+
+        return { components: [...state.components] };
+      }
+      return { components: [...state.components] };
+    });
+  },
+
   /**
    * 设置当前选中组件ID
    * @param componentId 组件ID
