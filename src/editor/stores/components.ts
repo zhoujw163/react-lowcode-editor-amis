@@ -4,18 +4,22 @@ export interface Component {
   id: number;
   name: string;
   props: Record<string, any>;
+  desc: string;
   children?: Component[];
   parentId?: number;
 }
 
 interface State {
   components: Component[];
+  curComponentId: number | null; // 当前选中组件ID
+  curComponent: Component | null; // 当前选中组件
 }
 
 interface Action {
   addComponent: (component: Component, parentId?: number) => void;
   deleteComponent: (componentId: number) => void;
   updateComponentProps: (componentId: number, props: Record<string, any>) => void;
+  setCurComponentId: (componentId: number | null) => void;
 }
 
 export const useComponentsStore = create<State & Action>((set, get) => ({
@@ -27,6 +31,9 @@ export const useComponentsStore = create<State & Action>((set, get) => ({
       desc: '页面'
     }
   ],
+  curComponentId: null, // 当前选中组件ID
+  curComponent: null, // 当前选中组件
+
   /**
    * 添加组件
    * @param component 组件
@@ -87,6 +94,16 @@ export const useComponentsStore = create<State & Action>((set, get) => ({
 
       return { components: [...state.components] };
     });
+  },
+  /**
+   * 设置当前选中组件ID
+   * @param componentId 组件ID
+   */
+  setCurComponentId(componentId: number | null) {
+    set(state => ({
+      curComponentId: componentId,
+      curComponent: getComponentById(componentId, state.components)
+    }));
   }
 }));
 

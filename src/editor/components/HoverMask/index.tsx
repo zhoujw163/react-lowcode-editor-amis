@@ -28,6 +28,11 @@ const HoverMask: FC<HoverMaskProps> = ({
     updatePosition();
   }, [componentId]);
 
+  // fix: 处理选中组件，再添加子组件时，组件高度没有变化
+  useEffect(() => {
+    updatePosition();
+  }, [components]);
+
   function updatePosition() {
     if (!componentId) return;
 
@@ -108,7 +113,7 @@ const HoverMask: FC<HoverMaskProps> = ({
             whiteSpace: 'nowrap'
           }}
         >
-          {curComponent?.name}
+          {curComponent?.desc}
         </div>
       </div>
     </>,
