@@ -7,7 +7,7 @@ import {
 } from '../../stores/component-config';
 import { useComponentsStore } from '../../stores/components';
 
-export function ComponentAttr() {
+export default function ComponentAttr() {
   const [form] = Form.useForm();
 
   const { curComponentId, curComponent, updateComponentProps } = useComponentsStore();

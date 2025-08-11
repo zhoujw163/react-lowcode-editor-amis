@@ -14,6 +14,12 @@ export interface ComponentSetter {
   [key: string]: any;
 }
 
+// 事件配置
+export interface ComponentEvent {
+  name: string;
+  label: string;
+}
+
 export interface ComponentConfig {
   name: string;
   defaultProps: Record<string, any>; // 组件自身的 props
@@ -21,6 +27,7 @@ export interface ComponentConfig {
   // component: React.ComponentType<any>;
   setter?: ComponentSetter[];
   stylesSetter?: ComponentSetter[];
+  events?: ComponentEvent[];
   devComponent: React.ComponentType<any>; // 编辑模式（画布中）
   prodComponent: React.ComponentType<any>; // 预览模式
 }
@@ -77,6 +84,16 @@ export const useComponentConfigStore = create<State & Action>(set => ({
           name: 'height',
           label: '高度',
           type: 'inputNumber'
+        }
+      ],
+      events: [
+        {
+          name: 'onClick',
+          label: '点击事件'
+        },
+        {
+          name: 'onDoubleClick',
+          label: '双击事件'
         }
       ]
     },

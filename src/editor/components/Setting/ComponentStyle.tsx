@@ -6,7 +6,7 @@ import CssEditor from './CssEditor';
 import { debounce } from 'lodash-es';
 import styleToObject from 'style-to-object';
 
-export function ComponentStyle() {
+export default function ComponentStyle() {
   const [form] = Form.useForm();
 
   const { curComponentId, curComponent, updateComponentStyles } = useComponentsStore();

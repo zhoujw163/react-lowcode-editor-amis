@@ -1,9 +1,9 @@
 import { Segmented } from 'antd';
 import { useState } from 'react';
 import { useComponentsStore } from '../../stores/components';
-import { ComponentAttr } from './ComponentAttr';
-import { ComponentEvent } from './ComponentEvent';
-import { ComponentStyle } from './ComponentStyle';
+import ComponentAttr from './ComponentAttr';
+import ComponentEvent from './ComponentEvent';
+import ComponentStyle from './ComponentStyle';
 
 export default function Setting() {
   const { curComponentId } = useComponentsStore();
