@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
-import { create } from 'zustand';
+import { create, type StateCreator } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 export interface Component {
   id: number;
@@ -27,7 +28,7 @@ interface Action {
   setMode: (mode: 'edit' | 'preview') => void;
 }
 
-export const useComponentsStore = create<State & Action>((set, get) => ({
+const creator: StateCreator<State & Action> = (set, get) => ({
   components: [
     {
       id: 1,
@@ -129,7 +130,13 @@ export const useComponentsStore = create<State & Action>((set, get) => ({
       curComponent: getComponentById(componentId, state.components)
     }));
   }
-}));
+});
+
+export const useComponentsStore = create<State & Action>()(
+  persist(creator, {
+    name: 'xxx'
+  })
+);
 
 /**
  * 根据组件ID获取组件
