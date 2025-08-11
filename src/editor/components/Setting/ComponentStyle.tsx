@@ -76,7 +76,6 @@ export default function ComponentStyle() {
         css[name.replace(/-\w/, item => item.toUpperCase().replace('-', ''))] = value;
       });
 
-      console.log(css);
       updateComponentStyles(curComponentId, { ...form.getFieldsValue(), ...css }, true);
     } catch (e) {
       console.log('handleEditorChange:error', e);

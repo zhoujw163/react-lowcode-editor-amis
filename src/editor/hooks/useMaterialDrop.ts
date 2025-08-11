@@ -3,6 +3,8 @@ import { useDrop } from 'react-dnd';
 import { useComponentsStore } from '@/editor/stores/components';
 import { useComponentConfigStore } from '@/editor/stores/component-config';
 
+export const acceptDropTypes = ['Container', 'Button', 'Modal'];
+
 /**
  * 组件拖拽
  * @param accept 接受的类型 eg: ['Container', 'Button']

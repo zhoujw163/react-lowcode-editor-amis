@@ -1,8 +1,8 @@
-import useMaterialDrop from '@/editor/hooks/useMaterialDrop';
+import useMaterialDrop, { acceptDropTypes } from '@/editor/hooks/useMaterialDrop';
 import type { CommonComponentProps } from '@/editor/types';
 
 function Page({ children, id, styles }: CommonComponentProps) {
-  const { canDrop, dropRef } = useMaterialDrop(['Container', 'Button'], id);
+  const { canDrop, dropRef } = useMaterialDrop(acceptDropTypes, id);
 
   return (
     <div

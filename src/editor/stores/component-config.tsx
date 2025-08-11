@@ -5,6 +5,8 @@ import ContainerDev from '../materials/Container/dev';
 import ContainerProd from '../materials/Container/prod';
 import PageDev from '../materials/Page/dev';
 import PageProd from '../materials/Page/prod';
+import ModalDev from '../materials/Modal/dev';
+import ModalProd from '../materials/Modal/prod';
 
 // 组件属性配置
 export interface ComponentSetter {
@@ -20,6 +22,12 @@ export interface ComponentEvent {
   label: string;
 }
 
+// 组件事件，实现组件间联动
+export interface ComponentMethod {
+  name: string;
+  label: string;
+}
+
 export interface ComponentConfig {
   name: string;
   defaultProps: Record<string, any>; // 组件自身的 props
@@ -28,6 +36,7 @@ export interface ComponentConfig {
   setter?: ComponentSetter[];
   stylesSetter?: ComponentSetter[];
   events?: ComponentEvent[];
+  methods?: ComponentMethod[];
   devComponent: React.ComponentType<any>; // 编辑模式（画布中）
   prodComponent: React.ComponentType<any>; // 预览模式
 }
@@ -96,6 +105,44 @@ export const useComponentConfigStore = create<State & Action>(set => ({
           label: '双击事件'
         }
       ]
+    },
+    Modal: {
+      name: 'Modal',
+      defaultProps: {
+        title: '弹窗'
+      },
+      setter: [
+        {
+          name: 'title',
+          label: '标题',
+          type: 'input'
+        }
+      ],
+      stylesSetter: [],
+      events: [
+        {
+          name: 'onOk',
+          label: '确认事件'
+        },
+        {
+          name: 'onCancel',
+          label: '取消事件'
+        }
+      ],
+      methods: [
+        {
+          name: 'open',
+          label: '打开弹窗'
+        },
+        {
+          name: 'close',
+          label: '关闭弹窗'
+        }
+      ],
+
+      desc: '弹窗',
+      devComponent: ModalDev,
+      prodComponent: ModalProd
     },
     Page: {
       name: 'Page',
