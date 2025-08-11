@@ -11,6 +11,10 @@ import TableDev from '../materials/Table/dev';
 import TableProd from '../materials/Table/prod';
 import TableColumnDev from '../materials/TableColumn/dev';
 import TableColumnProd from '../materials/TableColumn/prod';
+import FormDev from '../materials/Form/dev';
+import FormProd from '../materials/Form/prod';
+import FormItemDev from '../materials/FormItem/dev';
+import FormItemProd from '../materials/FormItem/prod';
 
 // 组件属性配置
 export interface ComponentSetter {
@@ -205,6 +209,80 @@ export const useComponentConfigStore = create<State & Action>(set => ({
       ],
       devComponent: TableColumnDev,
       prodComponent: TableColumnProd
+    },
+    Form: {
+      name: 'Form',
+      defaultProps: {},
+      desc: '表单',
+      setter: [
+        {
+          name: 'title',
+          label: '标题',
+          type: 'input'
+        }
+      ],
+      events: [
+        {
+          name: 'onFinish',
+          label: '提交事件'
+        }
+      ],
+      methods: [
+        {
+          name: 'submit',
+          label: '提交'
+        }
+      ],
+      devComponent: FormDev,
+      prodComponent: FormProd
+    },
+    FormItem: {
+      name: 'FormItem',
+      desc: '表单项',
+      defaultProps: {
+        name: new Date().getTime(),
+        label: '姓名'
+      },
+      devComponent: FormItemDev,
+      prodComponent: FormItemProd,
+      setter: [
+        {
+          name: 'type',
+          label: '类型',
+          type: 'select',
+          options: [
+            {
+              label: '文本',
+              value: 'input'
+            },
+            {
+              label: '日期',
+              value: 'date'
+            }
+          ]
+        },
+        {
+          name: 'label',
+          label: '标题',
+          type: 'input'
+        },
+        {
+          name: 'name',
+          label: '字段',
+          type: 'input'
+        },
+        {
+          name: 'rules',
+          label: '校验',
+          type: 'select',
+          options: [
+            {
+              label: '必填',
+              value: 'required'
+            }
+          ]
+        }
+      ]
     }
   },
   registerComponent(name, componentConfig) {

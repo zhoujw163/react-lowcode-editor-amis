@@ -3,7 +3,7 @@ import { useDrop } from 'react-dnd';
 import { getComponentById, useComponentsStore } from '@/editor/stores/components';
 import { useComponentConfigStore } from '@/editor/stores/component-config';
 
-export const acceptDropTypes = ['Container', 'Button', 'Modal', 'Table'];
+export const acceptDropTypes = ['Container', 'Button', 'Modal', 'Table', 'Form'];
 
 export interface ItemType {
   type: string;

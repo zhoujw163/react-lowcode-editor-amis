@@ -15,7 +15,7 @@ export default function Preview() {
     componentConfig[component.name].events?.forEach(event => {
       const eventConfig = component.props[event.name];
       if (eventConfig) {
-        props[event.name] = () => {
+        props[event.name] = (...args: any[]) => {
           eventConfig?.actions?.forEach((action: ActionConfig) => {
             if (action.type === 'goToLink') {
               window.location.href = action.url;
@@ -27,19 +27,23 @@ export default function Preview() {
               }
             } else if (action.type === 'customJS') {
               // new Function(函数参数名字，函数体)
-              const func = new Function('context', action.code);
+              const func = new Function('context', 'args', action.code);
               // 传入的参数就会赋值到 context
-              func({
-                name: component.name,
-                props: component.props,
-                showMessage(content: string) {
-                  message.success(content);
-                }
-              });
+              func(
+                {
+                  name: component.name,
+                  props: component.props,
+                  showMessage(content: string) {
+                    message.success(content);
+                  }
+                },
+                args
+              );
             } else if (action.type === 'componentMethod') {
               const componentRef = componentRefs.current[action.config.componentId];
               if (componentRef) {
-                componentRef[action.config.method]?.();
+                componentRef[action.config.method]?.(...args);
+                console.log('🚀 ~ handleEvent ~ args:', args);
               }
             }
           });
