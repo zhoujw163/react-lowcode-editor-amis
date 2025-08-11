@@ -2,6 +2,8 @@ import React from 'react';
 import { useComponentConfigStore } from '../../stores/component-config';
 import { type Component, useComponentsStore } from '../../stores/components';
 import { message } from 'antd';
+import type { GoToLinkConfig } from '../Setting/actions/GoToLink';
+import type { ShowMessageConfig } from '../Setting/actions/ShowMessage';
 
 export default function Preview() {
   const { components } = useComponentsStore();
@@ -12,17 +14,18 @@ export default function Preview() {
     componentConfig[component.name].events?.forEach(event => {
       const eventConfig = component.props[event.name];
       if (eventConfig) {
-        const { type } = eventConfig;
         props[event.name] = () => {
-          if (type === 'goToLink' && eventConfig.url) {
-            window.open(eventConfig.url, '_blank', 'noopener,noreferrer');
-          } else if (type === 'showMessage' && eventConfig.config) {
-            if (eventConfig.config.type === 'success') {
-              message.success(eventConfig.config.text);
-            } else if (eventConfig.config.type === 'error') {
-              message.error(eventConfig.config.text);
+          eventConfig?.actions?.forEach((action: GoToLinkConfig | ShowMessageConfig) => {
+            if (action.type === 'goToLink') {
+              window.location.href = action.url;
+            } else if (action.type === 'showMessage') {
+              if (action.config.type === 'success') {
+                message.success(action.config.text);
+              } else if (action.config.type === 'error') {
+                message.error(action.config.text);
+              }
             }
-          }
+          });
         };
       }
     });
