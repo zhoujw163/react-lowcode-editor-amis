@@ -37,7 +37,6 @@ export default function ComponentAttr() {
   }
 
   function valueChange(changeValues: ComponentConfig) {
-    console.log('🚀 ~ valueChange ~ changeValues:', changeValues);
     if (curComponentId) {
       updateComponentProps(curComponentId, changeValues);
     }
