@@ -1,6 +1,6 @@
 import { Input } from 'antd';
 import { useComponentsStore } from '@/editor/stores/components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export interface GoToLinkConfig {
   type: 'goToLink';
@@ -8,13 +8,18 @@ export interface GoToLinkConfig {
 }
 
 export interface GoToLinkProps {
+  value?: string;
   defaultValue?: string;
   onChange?: (config: GoToLinkConfig) => void;
 }
 
-export default function GoToLink({ defaultValue, onChange }: GoToLinkProps) {
+export default function GoToLink({ defaultValue, onChange, value: val }: GoToLinkProps) {
   const { curComponentId } = useComponentsStore();
   const [value, setValue] = useState(defaultValue);
+
+  useEffect(() => {
+    setValue(val);
+  }, [val]);
 
   function urlChange(value: string) {
     if (!curComponentId) return;

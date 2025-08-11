@@ -2,8 +2,7 @@ import React from 'react';
 import { useComponentConfigStore } from '../../stores/component-config';
 import { type Component, useComponentsStore } from '../../stores/components';
 import { message } from 'antd';
-import type { GoToLinkConfig } from '../Setting/actions/GoToLink';
-import type { ShowMessageConfig } from '../Setting/actions/ShowMessage';
+import type { ActionConfig } from '../Setting/ActionModal';
 
 export default function Preview() {
   const { components } = useComponentsStore();
@@ -15,7 +14,7 @@ export default function Preview() {
       const eventConfig = component.props[event.name];
       if (eventConfig) {
         props[event.name] = () => {
-          eventConfig?.actions?.forEach((action: GoToLinkConfig | ShowMessageConfig) => {
+          eventConfig?.actions?.forEach((action: ActionConfig) => {
             if (action.type === 'goToLink') {
               window.location.href = action.url;
             } else if (action.type === 'showMessage') {
@@ -24,6 +23,17 @@ export default function Preview() {
               } else if (action.config.type === 'error') {
                 message.error(action.config.text);
               }
+            } else if (action.type === 'customJS') {
+              // new Function(函数参数名字，函数体)
+              const func = new Function('context', action.code);
+              // 传入的参数就会赋值到 context
+              func({
+                name: component.name,
+                props: component.props,
+                showMessage(content: string) {
+                  message.success(content);
+                }
+              });
             }
           });
         };
